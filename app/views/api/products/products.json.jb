@@ -1,0 +1,7 @@
+# index = 0
+@products.map do |product|
+  {
+    name: product.name,
+  }
+  # index += 1
+end
