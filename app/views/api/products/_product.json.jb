@@ -1,0 +1,12 @@
+{
+  name: product.name,
+  price: product.price,
+  image_url: product.image_url,
+  description: product.description,
+  rating: product.rating,
+  price_adjustments: {
+    discounted: product.is_discounted?,
+    taxes: product.taxes,
+    total: product.total_cost,
+  },
+}
