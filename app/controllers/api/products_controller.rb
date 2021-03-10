@@ -1,6 +1,24 @@
 class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
+    #this code will require user to authenticate to view the index
+    # if current_user
+    #   @products = Product.all
+    #   render "index.json.jb"
+    # else
+    #   render json: []
+    # end
+
+    #this code provides parameters for a search query as well as how it should be sorted
     @products = Product.all
+    #this code declares how we want our queried index displayed
+    # if params[:search]
+    #   @products = Product.where("name ILIKE ?", "%#{params[:search]}%")
+    # end
+    # if params[:sort]
+    #   @products = Product.all.order(price: :asc)
+    # end
     render "index.json.jb"
   end
 
@@ -14,12 +32,19 @@ class Api::ProductsController < ApplicationController
     @product = Product.new(
       name: params[:name],
       price: params[:price],
-      image_url: params[:imgage_url],
+      # image_url: params[:image_url],
       description: params[:description],
+      supplier_id: params[:supplier_id],
       rating: params[:rating],
+      quantity: params[:quantity],
     )
-    @product.save
-    render "show.json.jb"
+
+    #Happy/Sad Path
+    if @product.save
+      render "show.json.jb"
+    else
+      render json: { errors: @product.errors.full_messages }, status: 400
+    end
   end
 
   def update
@@ -28,11 +53,17 @@ class Api::ProductsController < ApplicationController
 
     @product.name = params[:name] || @product.name
     @product.price = params[:price] || @product.price
-    @product.image_url = params[:image_url] || @product.image_url
+    # @product.image_url = params[:image_url] || @product.image_url
     @product.description = params[:description] || @product.description
+    @product.supplier_id = params[:supplier_id] || @product.supplier_id
     @product.rating = params[:rating] || @product.rating
-    @product.save
-    render "show.json.jb"
+
+    #Happy/Sad Path
+    if @product.save
+      render "show.json.jb"
+    else
+      render json: { errors: @product.errors.full_messages }, status: 400
+    end
   end
 
   def destroy

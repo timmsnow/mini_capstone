@@ -1,12 +1,15 @@
 {
   name: product.name,
   price: product.price,
-  image_url: product.image_url,
   description: product.description,
+  images: product.images,
   rating: product.rating,
-  price_adjustments: {
-    discounted: product.is_discounted?,
-    taxes: product.taxes,
-    total: product.total_cost,
-  },
+  # price_adjustments: {
+  #   discounted: product.is_discounted?,
+  #   taxes: product.taxes,
+  #   total: product.total_cost,
+  # },
+  quantity: product.quantity,
+  supplier_id: product.supplier_id,
+  supplier_name: product.supplier.name,
 }
