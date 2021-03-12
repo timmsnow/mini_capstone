@@ -7,7 +7,8 @@ class Product < ApplicationRecord
   # validates :quantity, numericality: { greater_than: 0 }
   has_many :images
   has_many :orders
-
+  has_many :product_categories
+  has_many :categories, through: :product_categories
   belongs_to :supplier
   #longform version of above
   # def supplier

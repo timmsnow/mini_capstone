@@ -21,6 +21,7 @@ class Api::OrdersController < ApplicationController
       total: calculated_total,
     )
     @order.save
+    render "show.json.jb"
   end
 
   def show
