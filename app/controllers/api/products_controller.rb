@@ -11,7 +11,6 @@ class Api::ProductsController < ApplicationController
     # end
 
     #this code provides parameters for a search query as well as how it should be sorted
-    @products = Product.all
     #this code declares how we want our queried index displayed
     # if params[:search]
     #   @products = Product.where("name ILIKE ?", "%#{params[:search]}%")
@@ -19,6 +18,12 @@ class Api::ProductsController < ApplicationController
     # if params[:sort]
     #   @products = Product.all.order(price: :asc)
     # end
+    @products = Product.all
+    if params[:category]
+      category = Category.find_by(name: params[:category])
+      @products = category.products
+    end
+    # @products = Product.where("name ILIKE ?", "%#{params[:search]}%")
     render "index.json.jb"
   end
 

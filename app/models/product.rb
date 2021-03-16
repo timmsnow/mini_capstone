@@ -5,11 +5,13 @@ class Product < ApplicationRecord
   # validates :price, presence: true, numericality: { greater_than: 0 }
   # validates :description, length: { in: 5..500 }
   # validates :quantity, numericality: { greater_than: 0 }
+  belongs_to :supplier
   has_many :images
-  has_many :orders
   has_many :product_categories
   has_many :categories, through: :product_categories
-  belongs_to :supplier
+  has_many :carted_products
+  has_many :users, through: :carted_products
+  has_many :orders, through: :carted_products
   #longform version of above
   # def supplier
   #   Supplier.find_by(id: supplier_id)
